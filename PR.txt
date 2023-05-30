@@ -1,0 +1,64 @@
+Exercício 1
+
+1.1 Foi alterado manualmente, usado search and replace, o atributo Id, para _id.
+Importou-se a base de dados usando o comando:
+mongoimport -d plantas -c plantas --file plantas.json --jsonArray
+
+1.2 
+Inicialmente fazer o comando: use plantas
+
+    1. Quantos registos estão na base de dados
+    Querie: db.plantas.count()
+    R: 29617
+
+    2. Quantos registos de plantação se encontram na freguesia "São Domingos de Rana"?
+    Querie: db.plantas.count({"Freguesia":"São Domingos de Rana"})
+    R: 5903
+
+    3. Qual a lista de freguesias (ordenada alfabeticamente e sem repetições)?
+    Querie: db.plantas.distinct("Freguesia").sort()
+    R: ['','Abóboda','Alcab_ideche','Alcabideche','São Domingos de Rana','U.F. Carcavelos e Parede','U.F. Cascais e Estoril']
+
+    4. Qual a distribuição dos registos por freguesia (quantos registos em cada freguesia)
+    Querie: db.plantas.aggregate([{$group: {_id:"$Freguesia", count: {$sum: 1}}}])
+    R: [
+            { _id: 'U.F. Carcavelos e Parede', count: 7629 },
+            { _id: 'Alcabideche', count: 1877 },
+            { _id: 'U.F. Cascais e Estoril', count: 12023 },
+            { _id: 'Alcab_ideche', count: 2157 },
+            { _id: 'São Domingos de Rana', count: 5903 },
+            { _id: 'Abóboda', count: 2 },
+            { _id: '', count: 26 }
+        ]
+    
+    5. Qual a distribuição dos registos por espécie?
+    Querie: db.plantas.aggregate([{$group: {_id:"$Espécie", count: {$sum: 1}}}])
+    R: [
+            { _id: 'tamareira', count: 47 },
+            { _id: 'loureiro real', count: 3 },
+            { _id: 'cipreste', count: 652 },
+            { _id: 'planta do natal', count: 2 },
+            { _id: 'ficus', count: 40 },
+            { _id: 'cevadilha', count: 446 },
+            { _id: 'Palmeira', count: 46 },
+            { _id: 'metrosidero', count: 70 },
+            { _id: 'cameleira', count: 1 },
+            { _id: 'a _identificar', count: 75 },
+            { _id: 'pinheiro manso', count: 751 },
+            { _id: 'magnolia', count: 71 },
+            { _id: 'metros_idero', count: 2 },
+            { _id: 'oliveira do paraíso', count: 27 },
+            { _id: 'lagerstroemia', count: 406 },
+            { _id: 'choupo branco', count: 473 },
+            { _id: 'eucalipto', count: 174 },
+            { _id: 'figueira da australia', count: 1 },
+            { _id: 'palmeira da china', count: 71 },
+            { _id: 'cipreste de monterey', count: 33 }
+        ]   
+
+    1.3 Para executar a API, basta fazer "npm i", seguido de "npm start"
+
+Exercício 2
+
+Para executar a interface é necessário ter a API a correr
+e basta também fazer "npm i", seguido de "npm start".
